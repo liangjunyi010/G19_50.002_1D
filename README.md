@@ -16,5 +16,5 @@
 |  SHL                          | 01100 | 12      |
 |  SHR                          | 01101 | 13      |
 |  SRA                          | 01110 | 14      |
-|  Increment                    | 01111 | 15      |
-|  Decrement                    | 10000 | 16      |
+|  Increment (extra)            | 01111 | 15      |
+|  Decrement (extra)            | 10000 | 16      |
