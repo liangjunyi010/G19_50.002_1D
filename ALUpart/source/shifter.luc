@@ -8,9 +8,9 @@ module shifter (
   always {
   case (alufn_signal){
     default: out = a;
-    b01100: out = a << b;
-    b01101: out = a >> b;
-    b01110: out = $signed(a) >>> b;
+    b1010: out = a << b;
+    b1011: out = a >> b;
+    b1100: out = $signed(a) >>> b;
     }
   }
 }

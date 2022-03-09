@@ -12,7 +12,7 @@ module au_top (
   ) {
   
   sig rst;                  // reset signal
-  adder_tester adder_tester;
+
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
@@ -32,10 +32,6 @@ module au_top (
     io_sel = 4hf;           // select no digits
     
     
-    adder_tester.clk = clk;
-    adder_tester.rst = rst_n;
-    adder_tester.start = 1;
-    io_led[0][1:0] = adder_tester.s;
 
     
     

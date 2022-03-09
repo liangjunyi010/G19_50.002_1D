@@ -10,12 +10,10 @@ module boolean (
 
     case(alufn_signal[3:0]){
     
-      b00111: out = a & b;
-      b01000: out = a | b;
-      b01001: out = a ^ b;
-      b01010: out = !(a ^ b);
-      b01011: out = a;
-      
+      b0110: out = a & b;
+      b0111: out = a | b;
+      b1000: out = a ^ b;
+      b1001: out = a;
       default:
         out = b0000000000000000;
     }

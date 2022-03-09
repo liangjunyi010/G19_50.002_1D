@@ -1,0 +1,25 @@
+module decrement (
+    input clk,  // clock
+    input rst,  // reset
+    output out[16]
+  ) {
+  dff register_1[16](#INIT(0), .clk(clk), .rst(rst));
+  adder decrement1;
+  counter slowClock(#SIZE(1), #DIV(26), .clk(clk), .rst(rst));
+  edge_detector slowClockEdge(#RISE(1), #FALL(0), .clk(clk));
+
+  always {
+    slowClockEdge.in = slowClock.value;
+    decrement1.a = b00011110;
+    decrement1.b = register_1.q;
+    decrement1.alufn_signal = 4b0001;
+    
+    
+    
+   
+    if (slowClockEdge.out == b1){ //only add when MSB of slowCLock == 1
+     register_1.d = decrement1.out;
+    }
+    out = decrement1.out;
+  }
+}

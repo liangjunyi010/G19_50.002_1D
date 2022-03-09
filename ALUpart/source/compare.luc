@@ -10,9 +10,9 @@ module compare (
     out = 16b0;
     case (alufn_signal) {
       default: out[0] = 0;
-      b00100: out[0] = z;
-      b00101: out[0] = n ^ v;
-      b00110: out[0] = z | (n ^ v);
+      b0011: out[0] = z;
+      b0100: out[0] = n ^ v;
+      b0101: out[0] = z | (n ^ v);
     }
   }
 }

@@ -17,10 +17,9 @@ module adder (
     s = b0000000000000000; 
     
     case(alufn_signal){ 
-      b00000:s = a+b;
-      b00001:s = a-b;
-      b00010:s = a*b;
-      b00011:s = a/b;
+      b0000:s = a+b;
+      b0001:s = a-b;
+      b0010:s = a*b;
       default: s = b0000000000000000;
   }
     n = s[15];
