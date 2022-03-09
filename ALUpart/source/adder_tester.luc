@@ -1,0 +1,131 @@
+module adder_tester (
+    input clk,
+    input rst,
+    input start,
+    output s[2] //0:off, 1:pass, 2:fail
+  ){
+  dff register[4](.clk(clk), .rst(rst));
+  counter slowclock(#SIZE(1),#DIV(26),.clk(clk),.rst(rst));
+  fsm state (.clk(slowclock.value), .rst(rst)) = {IDLE, ON, PASS, FAIL};
+  adder adder;
+  always {
+    //initial
+    s=0;
+    
+    adder.a = 0;
+    adder.b = 0;
+    adder.alufn_signal = b00000;
+    if (start == 0){
+      state.d = state.IDLE;
+    }
+    case(state.q){
+      state.IDLE:
+        s = 0;
+        if (start == 1){
+          state.d = state.ON;
+        }
+      
+      
+      
+      state.ON:
+        case(register.q){
+          
+          //add
+          5b0:
+            adder.a = 16b11110;
+            adder.b = 16b11111;
+            adder.alufn_signal = b00000;
+            if (adder.out != 16b111101){
+              state.d = state.FAIL;
+            }
+            adder.a = b1111111111100010;
+            adder.b = 16b11111;
+            adder.alufn_signal = b00000;
+            if (adder.out != 16b1){
+              state.d = state.FAIL;
+            }
+            adder.a = b1111111111100010;
+            adder.b = b1111111111100001;
+            adder.alufn_signal = b00000;
+            if (adder.out != b1111111111000011){
+              state.d = state.FAIL;
+            }
+            //illegal case
+            adder.a = b1000000000000000;
+            adder.b = b1000000000000000;
+            adder.alufn_signal = b00000;
+            if (adder.out != 16b0){
+              state.d = state.FAIL;
+            }
+            state.d = state.PASS;
+          5b00001:
+            //sub
+            adder.a = 16b11110;
+            adder.b = 16b11111;
+            adder.alufn_signal = b00001;
+            if (adder.out != b1111111111111111){
+              state.d = state.FAIL;
+            }
+            adder.a = b1111111111100010;
+            adder.b = 16b11111;
+            adder.alufn_signal = b00001;
+            if (adder.out != b1111111111000011){
+              state.d = state.FAIL;
+            }
+            adder.a = b1111111111100010;
+            adder.b = b1111111111100001;
+            adder.alufn_signal = b00001;
+            if (adder.out != 16b1){
+              state.d = state.FAIL;
+            }
+            
+            state.d = state.PASS;
+            
+            //illegal
+            adder.a = b1000000000000000;
+            adder.b = b1000000000000000;
+            adder.alufn_signal = b00001;
+            if (adder.out != 16b0){
+              state.d = state.FAIL;
+            }
+          5b00010:
+            adder.a = 16b11110;
+            adder.b = 16b11111;
+            adder.alufn_signal = b00010;
+            if (adder.out != 16b1110100010){
+              state.d = state.FAIL;
+            }
+            adder.a = 16b11110;
+            adder.b = b1111111111100001;
+            adder.alufn_signal = b00010;
+            if (adder.out != b1111110001011110){
+              state.d = state.FAIL;
+            }
+            state.d = state.PASS;
+            
+          5b00011:
+            adder.a = 16b110010;
+            adder.b = 16b10;
+            adder.alufn_signal = b00011;
+            if (adder.out != 16b11001){
+              state.d = state.FAIL;
+            }
+            adder.a = b1111111111001110;
+            adder.b = 16b10;
+            adder.alufn_signal = b00011;
+            if (adder.out != b1111111111100111){
+              state.d = state.FAIL;
+            }
+            
+            //passed
+            state.d = state.PASS;
+        }
+      state.PASS:
+        s = 1;
+      state.FAIL:
+        s = 2;
+    }
+    register.d = register.q;
+  }
+}
+
