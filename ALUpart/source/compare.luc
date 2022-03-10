@@ -1,4 +1,6 @@
 module compare (
+// z, v, n are all 1-bit inputs. ALUFN is a 4-bit input
+// 16 bits output (0 or 1)
     input z,
     input v,
     input n,
@@ -9,10 +11,10 @@ module compare (
   always {
     out = 16b0;
     case (alufn_signal) {
-      default: out[0] = 0;
-      b0011: out[0] = z;
-      b0100: out[0] = n ^ v;
-      b0101: out[0] = z | (n ^ v);
+      default: out[0] = 0; 
+      b0011: out[0] = z;      // alufn_signal b0011 denotes CMPEQ operation
+      b0100: out[0] = n ^ v;    // alufn_signal b0100 denotes CMPLT operation
+      b0101: out[0] = z | (n ^ v);  // alufn_signal b0101 denotes CMPLE operation
     }
   }
 }
