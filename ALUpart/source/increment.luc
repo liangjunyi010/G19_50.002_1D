@@ -17,7 +17,7 @@ module increment (
   // clk signal that synchronizes this unit
   // rst signal
   counter slowClock(#SIZE(1), #DIV(26), .clk(clk), .rst(rst));
-  	edge_detector slowClockEdge(#RISE(1), #FALL(0), .clk(clk));
+  edge_detector slowClockEdge(#RISE(1), #FALL(0), .clk(clk));
 
   always {
   // two important terminals, .d for input and .q for output.
