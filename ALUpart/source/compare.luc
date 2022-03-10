@@ -2,7 +2,7 @@ module compare (
     input z,
     input v,
     input n,
-    input alufn_signal[5],
+    input alufn_signal[4],
     output out[16] 
   ) {
   

@@ -14,8 +14,6 @@ module increment (
     increment1.b = register_1.q;
     increment1.alufn_signal = 4b0;
     
-    
-    
 	 
     if (slowClockEdge.out == b1){ //only add when MSB of slowCLock == 1
      register_1.d = increment1.out;

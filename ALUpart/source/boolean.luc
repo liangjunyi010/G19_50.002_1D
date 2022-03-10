@@ -1,7 +1,7 @@
 module boolean (
     input a[16],
     input b[16],
-    input alufn_signal[5],
+    input alufn_signal[4],
     output out[16]
   ) {
 

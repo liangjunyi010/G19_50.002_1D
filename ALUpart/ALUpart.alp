@@ -12,6 +12,7 @@
     <component>simple_dual_ram.v</component>
     <src top="true">au_top.luc</src>
     <src>boolean.luc</src>
+    <src>alu.luc</src>
     <src>decrement.luc</src>
     <component>edge_detector.luc</component>
     <constraint lib="true">au.xdc</constraint>

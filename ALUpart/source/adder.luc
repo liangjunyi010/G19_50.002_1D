@@ -3,7 +3,7 @@ module adder (
 // z, v, n are all 1-bit outputs.
     input a[16],
     input b[16],
-    input alufn_signal[5],
+    input alufn_signal[4],
     output out[16],
     output z[1],
     output v[1],
