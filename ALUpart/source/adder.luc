@@ -1,28 +1,28 @@
 module adder (
-// Note: a & b are 8-bit inputs. ALUFN is a 6-bit input
+// Note: a & b are 16-bit inputs. ALUFN is a 4-bit input
 // z, v, n are all 1-bit outputs.
-    input a[16],
-    input b[16],
-    input alufn_signal[4],
-    output out[16],
-    output z[1],
-    output v[1],
-    output n[1]
+    input a[16],       
+    input b[16],       
+    input alufn_signal[4],  
+    output out[16],   // 16 bits output
+    output z[1],      // which is 1 when out are all zeros
+    output v[1],      // which is 1 when the addition operation overflows
+    output n[1].      // which is 1 when out is negative
   ) {
   // The signal out is write only and cannot be read.
   // Hence, a signal s is used as a temp variable for the output.
   sig s[16]; 
- 
+
   always {
     s = b0000000000000000; 
     
     case(alufn_signal){ 
-      b0000:s = a+b;
-      b0001:s = a-b;
-      b0010:s = a*b;
+      b0000:s = a+b;   // alufn_signal b0000 denotes ADD operation
+      b0001:s = a-b;   // alufn_signal b0001 denotes SUB operation
+      b0010:s = a*b;   // alufn_signal b0010 denotes MUL operation
       default: s = b0000000000000000;
   }
-    n = s[15];
+    n = s[15];  
     v = (a[15] & (b[15] ^ alufn_signal[0]) & !s[15]) | (!a[15] & !(b[15] ^ alufn_signal[0]) & s[15]); 
     z = ~|s;
     out = s;
