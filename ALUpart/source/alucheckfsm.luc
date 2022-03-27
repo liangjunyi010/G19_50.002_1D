@@ -1,0 +1,90 @@
+// Input: clock, reset and change fsm signal; 5 buttons on IO Shield; DIP switches on IO Shield
+// Output: out is 16-bit output; show is 2-bit output; zvn is a 3-bit output; ls is a 3-bit output
+module alucheckfsm (
+    input clk,  // clock
+    input rst,  // reset
+    input bt, // change fsm
+    
+    output out[16],
+    output show[2],
+    output zvn[3],
+    output ls[3],
+
+    input io_button [5],    // 5 buttons on IO Shield
+    input io_dip [3][8]     // DIP switches on IO Shield
+    
+  ) {
+  
+  
+  fsm fsm_controller(.clk(clk), .rst(rst)) = {S0, S1}; //test cases to be put as states
+  counter slowclock(#SIZE(1),#DIV(26), .clk(clk), .rst(rst));
+  alumanualcheckfsm alumanualcheckfsm1(.clk(clk), .rst(rst));
+  aluromcheckfsm aluromcheckfsm1(.clk(slowclock.value), .rst(rst));
+  
+  button_conditioner buttoncond(.clk(clk));
+  edge_detector buttondetector(#RISE(1), #FALL(0),.clk(clk)); //detect on rising edge only
+  
+  button_conditioner buttoncond1(.clk(clk));
+  edge_detector buttondetector1(#RISE(1), #FALL(0),.clk(clk)); //detect on rising edge only
+  
+  sig o[16];
+  sig s[2];
+  sig zvn0[3];
+  sig ls0[3];
+  
+  
+
+  always {
+    
+    
+    aluromcheckfsm1.buttons = io_dip[2][0];
+    alumanualcheckfsm1.sw = io_dip[2][7];
+    
+    
+    buttoncond.in = io_button[0];
+    buttondetector.in = buttoncond.out;
+    alumanualcheckfsm1.bts = buttondetector.out;
+    
+    buttoncond1.in = io_button[3];
+    buttondetector1.in = buttoncond1.out;
+    alumanualcheckfsm1.bts1 = buttondetector1.out;
+    
+    
+    
+    alumanualcheckfsm1.swis[7:0] = io_dip[0];
+    alumanualcheckfsm1.swis[15:8] = io_dip[1];
+    o = 16b0;
+    s = b00;
+    zvn0 = b000;
+    ls0 = 3b0;
+  case(fsm_controller.q){
+      
+      fsm_controller.S0:
+      o = aluromcheckfsm1.out;
+      s = aluromcheckfsm1.show;
+       zvn0 = aluromcheckfsm1.zvn;
+      if(bt){
+        fsm_controller.d = fsm_controller.S1;
+          }
+        
+        
+        
+      fsm_controller.S1:
+      
+        o[7:0] = alumanualcheckfsm1.out[7:0];
+        o[15:8] = alumanualcheckfsm1.out[15:8];
+        zvn0 = alumanualcheckfsm1.zvn;
+        ls0 = alumanualcheckfsm1.ls;
+      
+      if(bt){
+        fsm_controller.d = fsm_controller.S0;
+          }
+      
+    }
+  
+    out = o;
+    show = s;
+    zvn = zvn0;
+    ls = ls0;
+  }
+}

@@ -1,0 +1,21 @@
+// Input: a is a 16-bit input, b is a 16-bit input, alufn_signal is a 4-bit input
+// Output: out is a 16-bit outpu
+module mul (
+    input a[16],       
+    input b[16],       
+    input alufn_signal[4],  
+    output out[16]   // 16 bits output
+  ) {
+
+   sig s[16]; 
+
+  always {
+    s = b0000000000000000; 
+    
+    case(alufn_signal){ 
+      b0010:s = a*b;   // alufn_signal b0010 denotes MUL operation
+      default: s = b0000000000000000;
+  }
+    out = s;
+  }
+}

@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.runs/synth_1'
+HD_PWD='D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

@@ -4,14 +4,11 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module adder_4 (
+module mul_21 (
     input [15:0] a,
     input [15:0] b,
-    input [4:0] alufn_signal,
-    output reg [15:0] out,
-    output reg [0:0] z,
-    output reg [0:0] v,
-    output reg [0:0] n
+    input [3:0] alufn_signal,
+    output reg [15:0] out
   );
   
   
@@ -22,25 +19,13 @@ module adder_4 (
     s = 16'h0000;
     
     case (alufn_signal)
-      5'h00: begin
-        s = a + b;
-      end
-      5'h01: begin
-        s = a - b;
-      end
-      5'h02: begin
+      4'h2: begin
         s = a * b;
-      end
-      5'h03: begin
-        s = a / b;
       end
       default: begin
         s = 16'h0000;
       end
     endcase
-    n = s[15+0-:1];
-    v = (a[15+0-:1] & (b[15+0-:1] ^ alufn_signal[0+0-:1]) & !s[15+0-:1]) | (!a[15+0-:1] & !(b[15+0-:1] ^ alufn_signal[0+0-:1]) & s[15+0-:1]);
-    z = ~(|s);
     out = s;
   end
 endmodule

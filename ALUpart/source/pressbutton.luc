@@ -1,0 +1,66 @@
+// Input: clk, rst, io_button is a 5-bit input
+// Output: io_led is a 8-bit output, io_seg is a 8-bit output, io_sel is a 4-bit output
+module pressbutton (
+    input clk,   
+    input rst,           // 100MHz clock
+    output io_led [3][8],   // LEDs on IO Shield
+    output io_seg [8],      // 7-segment LEDs on IO Shield
+    output io_sel [4],      // Digit select on IO Shield
+    input io_button [5]  // 5 buttons on IO Shield
+  ) {
+  
+  
+  .clk(clk) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+
+    edge_detector inc_detector (#RISE(1), #FALL(0));
+    edge_detector button_detector[4] (#RISE(1), #FALL(0));
+    button_conditioner button_conditioner[4];
+    
+    .rst(rst){
+        multi_seven_seg seg;
+        multi_dec_ctr dec_ctr;
+        pn_gen pn_gen(.seed(32h100));
+    }
+  }
+ 
+  sig position[2];
+  sig answer[4];
+  sig hit;
+  pos_to_led pos_to_led;
+  decoder pos_to_button(#WIDTH(2));
+  
+  
+  always {
+     
+    //generate blocks
+    position = pn_gen.num[1:0]; 
+    pos_to_led.pos = position; // decode num to block position
+    
+    io_led = pos_to_led.led; // decode position to led states
+    
+    
+    //manage button signals & decode position to button
+    button_conditioner.in = c{io_button[0], io_button[3], io_button[1], io_button[4]};
+    button_detector.in = button_conditioner.out;
+    
+    pos_to_button.in = position;
+    answer = pos_to_button.out;
+    
+    
+    //check if hit correct block
+    //increment score and update new block if so
+    hit = button_detector.out == answer;
+    inc_detector.in = hit;
+    pn_gen.next = hit;
+    
+    
+    //display score(increment if correct)
+    dec_ctr.inc = inc_detector.out;
+    seg.values = dec_ctr.digits;
+        
+    io_seg = ~seg.seg;
+    io_sel = ~seg.sel;
+  }
+}

@@ -1,3 +1,5 @@
+// Input: input clock signal and reset button
+// Output: out is a 16-bit output
 module decrement (
     input clk,  // clock
     input rst,  // reset

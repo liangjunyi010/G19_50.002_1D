@@ -1,0 +1,26 @@
+// Input: input clock signal and reset button; input increment the counter
+// Output: 1-bit overflow output and 4-bit current value
+module decimal_counter (
+    input clk,  // clock
+    input rst,  // reset
+    input inc, // increment the counter
+    output ovf, // overflow
+    output value[4] // current value
+  ) {
+
+  
+  .clk(clk), .rst(rst){
+    dff val[4];
+  }
+  
+  always {
+    value = val.q;
+    ovf = val.q == 9 && inc;
+    
+    if(inc){
+      if(val.q == 9)
+        val.d = 0;
+      else
+        val.d = val.q + 1;
+  }
+}

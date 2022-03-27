@@ -1,0 +1,432 @@
+// Input: clock, reset and change fsm signal; one input button on IO Shield
+// Output: out is 16-bit output; zvn is a 3-bit output; show is a 2-bit output
+module aluromcheckfsm (
+    input clk,  // clock
+    input rst,  // reset
+    input buttons,
+    output out[16], //output from alu
+    output show[2], //output to be shown on fpga
+    output zvn[3] // zvn output 
+  ) {
+  //dff for states
+  fsm y_controller(.clk(clk), .rst(rst)) = {S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17, S18, S19, S20, S21, S22, S23, S24, S25, S26, S27, S28, S29, S30, S31, S32, S33, S34, S35, S36, S37, S38, S39, S40, S41, S42, S43,S44, S45, S46, S47, S48, S49,S50,S51,S52}; //test cases to be put as states
+  
+  rom rom1; //import rom
+  alu alu1; //import alu
+  sig a[16];
+  sig b[16];
+  sig s[16]; //receive hardcoded output in rom
+  sig zvn0[3];
+  sig alufn_sig[4];
+  sig num_out[16]; //actual output from alu
+  sig num_show[2];
+  sig zvn1[3];
+  
+  
+  always {
+    //set inital to 0
+    
+    rom1.address = b000000;
+    s = rom1.out; //receive correspnding output in rom
+        zvn0 = rom1.oZVN; //receive corresponding zvn in rom
+        alufn_sig = rom1.alufn; //receive corresponding alu_signal in rom
+        a = rom1.oA; //receive corresponding a in rom
+        b = rom1.oB; //receive corresponding b in rom
+        alu1.a = a; //assign a to alu
+        alu1.b = b; //assign b to alu
+        alu1.alufn_signal =alufn_sig; //assign alu_signal to alu
+        num_out = alu1.out; //compute actual output from alu
+    zvn1 = alu1.zvn;
+    
+    
+    
+    //output from dff
+    case(y_controller.q){
+      
+      
+      // state 0
+      y_controller.S0:
+        rom1.address = b000000; //assign corresponding place in rom
+        
+        //test if the output from alu is same with the output in rom
+        if (num_out == s){num_show = b01; //if same, indicate same on fpga
+        }
+        else {num_show = b10; //if not same, indicate not same
+        }
+        y_controller.d = y_controller.S1; //proceed to the next state
+      
+      
+      //repeat steps of state 0
+      // state 1
+      y_controller.S1:
+        rom1.address = b000001;    
+        if (num_out == s){num_show = b01;}
+        else {num_show = b10;}
+        y_controller.d = y_controller.S2;       
+      //state 2
+      y_controller.S2:
+        rom1.address = b000010;
+        if (num_out == s){num_show = b01;}
+        else {num_show = b10;}
+        y_controller.d = y_controller.S3;      
+      //state 3
+      y_controller.S3:
+        rom1.address = b000011;
+        if (num_out == s){num_show = b01;}
+        else {num_show = b10;}
+        y_controller.d = y_controller.S4;
+      
+      //state4
+      y_controller.S4:
+        rom1.address = b000100;
+        if (num_out == s){num_show = b01;}
+        else {num_show = b10;}
+        y_controller.d = y_controller.S5;
+      //state 5
+      y_controller.S5:
+        rom1.address = b000101;
+        if (num_out == s){num_show = b01;}
+        else {num_show = b10;}
+        y_controller.d = y_controller.S6;      
+      //state 6
+      y_controller.S6:
+        rom1.address = b000110;
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S7;
+        
+      //state 7
+      y_controller.S7:
+        rom1.address = b000111;
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S8;
+      //state 8
+      y_controller.S8:
+        rom1.address = b001000;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S9;
+      //state 9
+      y_controller.S9:
+        rom1.address = b001001;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S10;
+      
+      //state 10
+      y_controller.S10:
+        rom1.address = b001010;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S11;
+      
+      //state 11
+      y_controller.S11:
+        rom1.address = b001011;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S12;
+      
+      //state 12
+      y_controller.S12:
+        rom1.address = b001100;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S13;
+      
+      //state 13
+      y_controller.S13:
+        rom1.address = b001101;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S14;
+      
+      //state 14
+      y_controller.S14:
+        rom1.address = b001110;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S15;
+      
+      //state 15
+      y_controller.S15:
+        rom1.address = b001111;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S16;
+      
+      //state 16
+      y_controller.S16:
+        rom1.address = b010000;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S17;
+      
+      //state 17
+      y_controller.S17:
+        rom1.address = b010001;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S18;
+      
+      //state 18
+      y_controller.S18:
+        rom1.address = b010010;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S19;
+      
+      //state 19
+      y_controller.S19:
+        rom1.address = b010011;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S20;
+      
+      //state 20
+      y_controller.S20:
+        rom1.address = b010100;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S21;
+      
+      //state 21
+      y_controller.S21:
+        rom1.address = b010101;        
+        if (num_out == s){          num_show = b01;       }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S22;
+      
+      //state 22
+      y_controller.S22:
+        rom1.address = b010110;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S23;
+      
+      //state 23
+      y_controller.S23:
+        rom1.address = b010111;        
+        if (num_out == s){          num_show = b01;        }
+        else {          num_show = b10;        }
+        y_controller.d = y_controller.S24;    
+        
+    
+      //state 24
+      y_controller.S24:
+    
+         rom1.address = b011000;        
+         if (num_out == s){          num_show = b01;       }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S25;
+
+       //state 25
+       y_controller.S25:
+         rom1.address = b011001;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S26;
+
+       //state 26
+       y_controller.S26:
+         rom1.address = b011010;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S27;    
+
+       //state 27
+       y_controller.S27:
+         rom1.address = b011011;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S28;          
+
+       //state 28
+       y_controller.S28:
+         rom1.address = b011100;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S29;          
+
+      //state 29
+       y_controller.S29:
+         rom1.address = b011101;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S30;          
+
+      //state 30
+       y_controller.S30:
+         rom1.address = b011110;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S31;    
+
+      //state 31
+       y_controller.S31:
+         rom1.address = b011111;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S32;    
+
+      //state 32
+       y_controller.S32:
+         rom1.address = b100000;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S33;    
+
+      //state 33
+       y_controller.S33:
+         rom1.address = b100001;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S34;    
+
+      //state 34
+       y_controller.S34:
+         rom1.address = b100010;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S35;    
+
+      //state 35
+       y_controller.S35:
+         rom1.address = b0100011;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S36;    
+
+      //state 36
+       y_controller.S36:
+         rom1.address = b100100;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S37;    
+
+      //state 37
+       y_controller.S37:
+         rom1.address = b100101;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S38;    
+
+      //state 38
+       y_controller.S38:
+         rom1.address = b100110;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S39;    
+
+      //state 39
+       y_controller.S39:
+         rom1.address = b100111;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S40;    
+
+      //state 40
+       y_controller.S40:
+         rom1.address = b101000;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S41;    
+
+      //state 41
+       y_controller.S41:
+         rom1.address = b101001;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S42;    
+
+      //state 42
+       y_controller.S42:
+         rom1.address = b101010;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S43;    
+
+      //state 43
+       y_controller.S43:
+         rom1.address = b101011;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S44;    
+
+      //state 44
+       y_controller.S44:
+         rom1.address = b101100;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S45;       
+
+      //state 45
+       y_controller.S45:
+         rom1.address = b101101;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S46;    
+
+      //state 46
+       y_controller.S46:
+         rom1.address = b101110;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S47;    
+
+      //state 47
+       y_controller.S47:
+         rom1.address = b101111;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S48;    
+
+      //state 48
+       y_controller.S48:
+         rom1.address = b110000;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S49; 
+        
+       y_controller.S49:
+         rom1.address = b110001;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S50; 
+        
+        y_controller.S50:
+         rom1.address = b110010;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S51; 
+        
+        y_controller.S51:
+         rom1.address = b110011;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S52; 
+        
+        y_controller.S52:
+         rom1.address = b110100;        
+         if (num_out == s){          num_show = b01;        }
+         else {          num_show = b10;        }
+         y_controller.d = y_controller.S0; 
+        
+        }   
+
+    
+    //outputs
+    if (buttons){
+      out[0] = ~num_out[0];
+      out[15:1] = num_out[15:1];
+      show = b10;
+      zvn = zvn1;
+    }
+    else{
+      out = num_out;
+      show = num_show;
+      zvn = zvn1;
+    }
+  }
+}

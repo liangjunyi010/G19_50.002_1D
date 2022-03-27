@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.runs/synth_1/au_top_0.tcl"
+  variable script "D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.runs/synth_1/au_top_0.tcl"
   variable category "vivado_synth"
 }
 
@@ -76,19 +76,41 @@ create_project -in_memory -part xc7a35tftg256-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.cache/wt} [current_project]
-set_property parent.project_path {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.xpr} [current_project]
+set_property webtalk.parent_dir D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.cache/wt [current_project]
+set_property parent.project_path D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/adder_4.v}
-  {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/adder_tester_1.v}
-  {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/counter_3.v}
-  {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/reset_conditioner_2.v}
-  {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/au_top_0.v}
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/adder_20.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/alu_15.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/alucheckfsm_3.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/alumanualcheckfsm_8.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/aluromcheckfsm_9.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/boolean_22.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/button_conditioner_1.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/compare_23.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/counter_17.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/counter_7.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/decimal_counter_19.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/decoder_14.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/edge_detector_2.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/enq_25.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/mul_21.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/multi_dec_ctr_11.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/multi_seven_seg_10.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/pipeline_6.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/pn_gen_12.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/pos_to_led_13.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/pressbutton_5.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/reset_conditioner_4.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/rom_16.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/seven_seg_18.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/shd_26.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/shifter_24.v
+  D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.srcs/sources_1/imports/verilog/au_top_0.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -102,11 +124,11 @@ foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
 read_xdc {{F:/Alchitry/Alchitry Labs/library/components/au.xdc}}
 set_property used_in_implementation false [get_files {{F:/Alchitry/Alchitry Labs/library/components/au.xdc}}]
 
-read_xdc {{D:/Alchitry Labs/ALUpart/work/constraint/alchitry.xdc}}
-set_property used_in_implementation false [get_files {{D:/Alchitry Labs/ALUpart/work/constraint/alchitry.xdc}}]
+read_xdc D:/SUTD/term4/G4_50.001_1D/ALUpart/work/constraint/alchitry.xdc
+set_property used_in_implementation false [get_files D:/SUTD/term4/G4_50.001_1D/ALUpart/work/constraint/alchitry.xdc]
 
-read_xdc {{D:/Alchitry Labs/ALUpart/work/constraint/io.xdc}}
-set_property used_in_implementation false [get_files {{D:/Alchitry Labs/ALUpart/work/constraint/io.xdc}}]
+read_xdc D:/SUTD/term4/G4_50.001_1D/ALUpart/work/constraint/io.xdc
+set_property used_in_implementation false [get_files D:/SUTD/term4/G4_50.001_1D/ALUpart/work/constraint/io.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]

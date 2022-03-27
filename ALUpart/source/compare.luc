@@ -1,3 +1,5 @@
+// Input:  z, v, n are all 1-bit inputs. ALUFN is a 4-bit input
+// Output:  out is a 16-bit output (0 or 1)
 module compare (
 // z, v, n are all 1-bit inputs. ALUFN is a 4-bit input
 // 16 bits output (0 or 1)

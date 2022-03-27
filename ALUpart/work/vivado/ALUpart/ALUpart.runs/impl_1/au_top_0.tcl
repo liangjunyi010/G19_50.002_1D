@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.runs/impl_1/au_top_0.tcl"
+  variable script "D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.runs/impl_1/au_top_0.tcl"
   variable category "vivado_impl"
 }
 
@@ -129,17 +129,17 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.cache/wt} [current_project]
-  set_property parent.project_path {D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.xpr} [current_project]
-  set_property ip_output_repo {{D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.cache/ip}} [current_project]
+  set_property webtalk.parent_dir D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.cache/wt [current_project]
+  set_property parent.project_path D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.xpr [current_project]
+  set_property ip_output_repo D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet {{D:/Alchitry Labs/ALUpart/work/vivado/ALUpart/ALUpart.runs/synth_1/au_top_0.dcp}}
+  add_files -quiet D:/SUTD/term4/G4_50.001_1D/ALUpart/work/vivado/ALUpart/ALUpart.runs/synth_1/au_top_0.dcp
 OPTRACE "read constraints: implementation" START { }
   read_xdc {{F:/Alchitry/Alchitry Labs/library/components/au.xdc}}
-  read_xdc {{D:/Alchitry Labs/ALUpart/work/constraint/alchitry.xdc}}
-  read_xdc {{D:/Alchitry Labs/ALUpart/work/constraint/io.xdc}}
+  read_xdc D:/SUTD/term4/G4_50.001_1D/ALUpart/work/constraint/alchitry.xdc
+  read_xdc D:/SUTD/term4/G4_50.001_1D/ALUpart/work/constraint/io.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }

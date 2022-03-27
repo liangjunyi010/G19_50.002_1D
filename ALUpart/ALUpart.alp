@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ALUpart" board="Alchitry Au" language="Lucid" version="3">
   <files>
+    <src>shd.luc</src>
+    <src>alumanualcheckfsm.luc</src>
     <src>shifter.luc</src>
-    <component>counter.luc</component>
+    <component>reset_conditioner.luc</component>
+    <src>decimal_counter.luc</src>
+    <src>cu.luc</src>
     <src>compare.luc</src>
+    <src>aluromcheckfsm.luc</src>
+    <src>seven_seg.luc</src>
+    <component>pn_gen.luc</component>
+    <src>rom.luc</src>
+    <src>pos_to_led.luc</src>
+    <src>mul.luc</src>
+    <src>enq.luc</src>
+    <src>regfile.luc</src>
+    <component>counter.luc</component>
+    <src>multi_seven_seg.luc</src>
     <component>pipeline.luc</component>
     <component>button_conditioner.luc</component>
-    <component>reset_conditioner.luc</component>
     <src>adder.luc</src>
-    <src>increment.luc</src>
-    <component>simple_dual_ram.v</component>
-    <src top="true">au_top.luc</src>
     <src>boolean.luc</src>
-    <src>alu.luc</src>
     <src>decrement.luc</src>
+    <component>simple_dual_ram.v</component>
+    <src>alucheckfsm.luc</src>
+    <src top="true">au_top.luc</src>
+    <component>encoder.luc</component>
+    <component>decoder.luc</component>
+    <src>multi_dec_ctr.luc</src>
+    <src>pressbutton.luc</src>
     <component>edge_detector.luc</component>
+    <src>alu.luc</src>
     <constraint lib="true">au.xdc</constraint>
     <constraint lib="true">alchitry.acf</constraint>
     <constraint lib="true">io.acf</constraint>
