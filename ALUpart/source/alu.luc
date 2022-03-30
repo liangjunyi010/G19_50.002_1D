@@ -92,6 +92,8 @@ module alu (
       s = shifter1.out;
       b1101: // shd
       s = shd1.out;
+      b1110: // b
+      s = boolean1.out;
       b1111: // enq
       s = enq1.out;
       }

@@ -3,6 +3,7 @@
   <files>
     <src>shd.luc</src>
     <src>alumanualcheckfsm.luc</src>
+    <src>beta.luc</src>
     <src>shifter.luc</src>
     <component>reset_conditioner.luc</component>
     <src>decimal_counter.luc</src>
@@ -11,6 +12,7 @@
     <src>aluromcheckfsm.luc</src>
     <src>seven_seg.luc</src>
     <component>pn_gen.luc</component>
+    <src>random_gen_row.luc</src>
     <src>rom.luc</src>
     <src>pos_to_led.luc</src>
     <src>mul.luc</src>
@@ -27,6 +29,7 @@
     <src>alucheckfsm.luc</src>
     <src top="true">au_top.luc</src>
     <component>encoder.luc</component>
+    <src>random_gen_q.luc</src>
     <component>decoder.luc</component>
     <src>multi_dec_ctr.luc</src>
     <src>pressbutton.luc</src>

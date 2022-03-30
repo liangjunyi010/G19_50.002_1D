@@ -1,29 +1,28 @@
 module cu (
     input clk,  // clock
-    input rst,  // reset
+    input rst,
     input st, //slow_timer
     input rb_data[16], //direct reading of regfile data from read_address_b
     
+
     input left_button,
     input central_button,
     input right_button,
     
-    output alufn[6],
+    output alufn[4],
     output asel[3],
     output bsel[3],
-    output wdsel,
+    output wdsel[2],
     output regfile_write_address[4], // rc
     output regfile_read_address_a[4], // ra
     output regfile_read_address_b[4], // rb
     output we, //we
     output seven_seg1[2],
-    output seven_seg2[2],
+    output seven_seg2[2]
     
     
     
-    output decimal_counter_increase, 
-    output decimal_counter_rst,
-    output debug[4]
+
   ) {
 
   
@@ -56,6 +55,7 @@ module cu (
       RAND_GEN_ROW,
       ROW_GEN_RAND,
       ROW_GEN_MANUAL,
+      SWAP_HEAD,
       ENQUENE,
       INCREASE_SCORE,
       GAME_OVER
@@ -79,9 +79,7 @@ module cu (
     
    
     
-    debug = b0000;
-    decimal_counter_increase = 0;
-    decimal_counter_rst = 0;
+
     
 
 
@@ -100,7 +98,7 @@ module cu (
         regfile_write_address = b0000;
         seven_seg1 = b01;
         seven_seg2 = b01;
-        if(rst){
+        if(rst==1){
           game_fsm.d = game_fsm.START_SET_TIMER;
           }
         else{
@@ -128,13 +126,13 @@ module cu (
 
       game_fsm.RAND_GEN_QUEUE:
         alufn = b0000;                             
-        asel = b011;                                  
+        asel = b000;                                  
         bsel = b000;
         we = b1;
-        wdsel = b0;
+        wdsel = b11;
         regfile_read_address_a = b0000;
         regfile_read_address_b = b0000; 
-        regfile_write_address = b0000;
+        regfile_write_address = b1110;
         seven_seg1 = b00;
         seven_seg2 = b00;
         
@@ -399,23 +397,147 @@ module cu (
           }
         
       game_fsm.REDUCE_RED:
+        alufn = b1110;                             
+        asel = b000;                                  
+        bsel = b110;
+        we = b1;
+        wdsel = b0;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000; 
+        regfile_write_address = b0110;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.ROW_GEN_MANUAL;
+        
+      game_fsm.REDUCE_GREEN:
+        alufn = b1110;                             
+        asel = b000;                                  
+        bsel = b101;
+        we = b1;
+        wdsel = b0;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000; 
+        regfile_write_address = b0110;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.ROW_GEN_MANUAL;
+        
+      game_fsm.SWAP_HEAD:
+        alufn = b1101;                             
+        asel = b000;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b0;
+        regfile_read_address_a = b0010;
+        regfile_read_address_b = b1001; 
+        regfile_write_address = b0010;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.INCREASE_SCORE;
+        
+      game_fsm.RAND_GEN_ROW: // gai
+        alufn = b0000;                             
+        asel = b000;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b10;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000; 
+        regfile_write_address = b1101;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.INCREASE_SCORE;
+        
+        
+      game_fsm.ROW_GEN_RAND: 
+        alufn = b0000;                             
+        asel = b010;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b0;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b1101; 
+        regfile_write_address = b1001;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.ENQUENE;
+        
+        
+      game_fsm.ENQUENE: 
+        alufn = b1111;                             
+        asel = b000;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b0;
+        regfile_read_address_a = b0010;
+        regfile_read_address_b = b1001; 
+        regfile_write_address = b0010;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.INCREASE_SCORE;
+        
+      game_fsm.INCREASE_SCORE: 
+        alufn = b0000;                             
+        asel = b001;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b0;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0010; 
+        regfile_write_address = b0010;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.IDLE;
+        
+      game_fsm.CHECK_TIMER: 
         alufn = b0011;                             
         asel = b000;                                  
         bsel = b001;
         we = b1;
         wdsel = b0;
-        regfile_read_address_a = b1000;
-        regfile_read_address_b = b1111; 
+        regfile_read_address_a = b1010;
+        regfile_read_address_b = b1111;
         regfile_write_address = b1111;
         seven_seg1 = b00;
         seven_seg2 = b00;
-      
+        if(rb_data == 1){
+        game_fsm.d = game_fsm.GAME_OVER;
+        }
+        else{
+        game_fsm.d = game_fsm.DECREASE_TIMER;
+        }
+        
+      game_fsm.DECREASE_TIMER: 
+        alufn = b0001;                             
+        asel = b000;                                  
+        bsel = b001;
+        we = b1;
+        wdsel = b0;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000;
+        regfile_write_address = b0000;
+        seven_seg1 = b00;
+        seven_seg2 = b10;
+        game_fsm.d = game_fsm.IDLE;
         
         
-        
-        
-        
-        
+      game_fsm.GAME_OVER: 
+        alufn = b0000;                             
+        asel = b000;                                  
+        bsel = b000;
+        we = b0;
+        wdsel = b01;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000;
+        regfile_write_address = b0010;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        if(rst == 0){
+        game_fsm.d = game_fsm.GAME_OVER;
+        }
+        else{
+        game_fsm.d = game_fsm.START;
+        }         
       }
     } 
   }

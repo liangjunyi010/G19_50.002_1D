@@ -21,6 +21,7 @@ module au_top (
  
   
   alucheckfsm alucheckfsm1(.clk(clk), .rst(rst));
+  reset_conditioner reset_cond(.clk(clk));
   
   fsm s_controller(.clk(clk),.rst(rst)) = {S0,S1};
 
@@ -28,7 +29,7 @@ module au_top (
   .clk(clk) {
     // The reset conditioner is used to synchronize the reset signal to the FPGA
     // clock. This ensures the entire FPGA comes out of reset at the same time.
-    reset_conditioner reset_cond;
+   
     button_conditioner enter_game_conditioner;
     edge_detector enter_game_detector(#RISE(1), #FALL(0));
    .rst(rst){
