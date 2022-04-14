@@ -1,0 +1,28 @@
+// Input: clk, rst, inc
+// Output: digits is a 4-bit outpu
+module multi_decre #(
+    DIGITS = 4 : DIGITS >= 2  // number of digits
+  ) (
+    input clk,                // clock
+    input rst,                // reset
+    input dec,                // increment counter
+
+    output digits[DIGITS][4]  // digit values
+  ) {
+ 
+  .clk(clk), .rst(rst) {
+    decimal_counter_decre dctr [DIGITS]; // digit counters
+  }
+ 
+  always {
+  
+
+    //dctr.rst_button = rst_button;
+    dctr.dec[0] = dec;   // decrease the first digit
+    digits = dctr.value; // output the values
+ 
+    // if the previous digit downflows, decrease the next, 即前一位也需要减一（对应位的dwf信号设为1）
+    dctr.dec[1+:DIGITS-1] = dctr.dwf[0+:DIGITS-1];
+  }
+}
+ 

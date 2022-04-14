@@ -1,0 +1,25 @@
+module random_gen_q (
+    input clk,  // clock
+    input rst,  // reset
+    input trigger,
+    output out[16]
+  ) {
+  pn_gen pn_gen1(.clk(clk),.rst(rst),.seed(32h100)); 
+  
+  always {
+  
+    pn_gen1.next = trigger;
+    out = pn_gen1.num[15:0];
+    if (pn_gen1.num[1:0] != b00 & pn_gen1.num[3:2] != b00 &
+        pn_gen1.num[5:4] != b00 & pn_gen1.num[7:6] != b00 &
+        pn_gen1.num[9:8] != b00 & pn_gen1.num[11:10] != b00 &
+      pn_gen1.num[13:12] != b00 & pn_gen1.num[15:14] != b00 
+     ){
+      out = pn_gen1.num[15:0];
+    }
+     else{
+    out = b0110100111110101;
+      }
+  
+    }
+}

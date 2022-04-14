@@ -1,0 +1,102 @@
+pin clk CLOCK;
+clock clk 100MHz;
+
+pin rst_n RESET pulldown;
+
+
+
+// flip the Tx/Rx lines
+pin usb_rx USB_TX;
+pin usb_tx USB_RX;
+
+
+
+pin io_button[0] B28 pulldown;
+pin io_button[1] B27 pulldown;
+pin io_button[2] B23 pulldown;
+pin io_button[3] B24 pulldown;
+pin io_button[4] C49 pulldown;
+
+
+pin io_sel_2[0] B2; // DIGIT 4
+pin io_sel_2[1] B3; // DIGIT 3
+pin io_sel_2[2] B49; // DIGIT 2
+pin io_sel_2[3] B48; // DIGIT 1
+
+pin io_seg_2[2] B8 ; // C
+pin io_seg_2[1] B9 ; // B
+pin io_seg_2[3] B11 ; // D
+pin io_seg_2[6] B12 ; // G
+pin io_seg_2[0] B40 ; // A
+pin io_seg_2[4] B14 ; // E
+pin io_seg_2[5] B15 ; // F
+
+
+
+pin io_sel_1[0] A2; // DIGIT 4
+pin io_sel_1[1] A3; // DIGIT 3
+pin io_sel_1[2] A49; // DIGIT 2
+pin io_sel_1[3] A48; // DIGIT 1
+
+pin io_seg_1[2] A8 ; // C
+pin io_seg_1[1] A9 ; // B
+pin io_seg_1[3] A11 ; // D
+pin io_seg_1[6] A12 ; // G
+pin io_seg_1[0] A40 ; // A
+pin io_seg_1[4] A14 ; // E
+pin io_seg_1[5] A15 ; // F
+
+
+
+pin io_led_r[0] A27;
+pin io_led_r[1] A28;
+pin io_led_r[2] A24;
+pin io_led_r[3] A23;
+pin io_led_r[4] C28;
+pin io_led_r[5] C27;
+pin io_led_r[6] C23;
+pin io_led_r[7] C24;
+pin io_led_r[8] C40;
+pin io_led_r[9] C39;
+pin io_led_r[10] C11;
+pin io_led_r[11] C12;
+
+
+pin io_led_g[0] A30;
+pin io_led_g[1] A31;
+pin io_led_g[2] A21;
+pin io_led_g[3] A20;
+pin io_led_g[4] C31;
+pin io_led_g[5] C30;
+pin io_led_g[6] C20;
+pin io_led_g[7] C21;
+pin io_led_g[8] C43;
+pin io_led_g[9] C42;
+pin io_led_g[10] C8;
+pin io_led_g[11] C9;
+
+
+pin io_led_b[0] A33;
+pin io_led_b[1] A34;
+pin io_led_b[2] A18;
+pin io_led_b[3] A17;
+pin io_led_b[4] C34;
+pin io_led_b[5] C33;
+pin io_led_b[6] C17;
+pin io_led_b[7] C18;
+pin io_led_b[8] C46;
+pin io_led_b[9] C45;
+pin io_led_b[10] C5;
+pin io_led_b[11] C6;
+
+
+
+
+
+pin io_led_b[0] C43;
+pin io_led_b[1] C42;
+pin io_led_b[2] C8;
+pin io_led_b[3] C9;
+
+
+

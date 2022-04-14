@@ -1,0 +1,39 @@
+// Input: input clock signal and reset button; input increment the counter
+// Output: 1-bit overflow output and 4-bit current value
+module decimal_counter_decre (
+    input clk,  // clock
+    input rst,  // reset
+    input dec, // increment the counter
+    output dwf, // overflow
+    output value[4] // current value
+  ) 
+
+{
+
+  
+  .clk(clk), .rst(rst){
+    dff val[4](#INIT(d30));
+  }
+  
+  always {
+ 
+
+    
+
+    value = val.q;
+    dwf = val.q == 0 && dec;
+    
+   // if(val.q[0]==0 && val.q[1]==0 && val.q[2]==0 && val.q[3]==0){
+    
+    //}
+    //else{
+      if(dec){
+        if(val.q == 0)
+          val.d = 9;
+        else
+          val.d = val.q - 1;
+      }
+    //}
+}
+
+}
