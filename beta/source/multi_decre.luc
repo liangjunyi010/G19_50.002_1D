@@ -1,28 +1,51 @@
-// Input: clk, rst, inc
-// Output: digits is a 4-bit outpu
-module multi_decre #(
-    DIGITS = 4 : DIGITS >= 2  // number of digits
-  ) (
-    input clk,                // clock
-    input rst,                // reset
-    input dec,                // increment counter
-
-    output digits[DIGITS][4]  // digit values
-  ) {
- 
-  .clk(clk), .rst(rst) {
-    decimal_counter_decre dctr [DIGITS]; // digit counters
+// Input: input clock signal and reset button; input increment the counter
+// Output: digits[DIGITS][4]
+module multi_decre 
+    (
+    input clk,  // clock
+    input rst,  // reset
+    input dec, // increment the counter
+    output digits[4][4] // output
+   ) 
+{
+  .clk(clk), .rst(rst){
+    dff time1[4](#INIT(d0));
+    dff time2[4](#INIT(d3));
+    dff time3[4](#INIT(d0));
+    
   }
- 
+  sig digi[4][4];
   always {
-  
+    digi[0] = time1.q;
+    digi[1] = time2.q;
+    digi[2] = time3.q;
+    digi[3] = 4b0;
+    if (dec == 1){
+      if (digi[0] == 0){
+        if (digi[1] == 0){
+          if (digi[2] != 0){
+            digi[2] = digi[2] - 1;
+            digi[1] = 4d9;
+            digi[0] = 4d9;
+            }
+          }
+        else{
+          digi[1] = digi[1] - 1;
+          digi[0] = 4d9;
+          }
+        }
+      else {
+        digi[0] = digi[0] - 1;
+        }
+    }
 
-    //dctr.rst_button = rst_button;
-    dctr.dec[0] = dec;   // decrease the first digit
-    digits = dctr.value; // output the values
- 
-    // if the previous digit downflows, decrease the next, 即前一位也需要减一（对应位的dwf信号设为1）
-    dctr.dec[1+:DIGITS-1] = dctr.dwf[0+:DIGITS-1];
-  }
+    time1.d[3:0] = digi[0];
+    time2.d[3:0] = digi[1];
+    time3.d[3:0] = digi[2];
+    digits = digi;
+
+}
+       
+  
 }
  

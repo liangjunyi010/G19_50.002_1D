@@ -6,6 +6,7 @@ module decimal_counter_decre (
     input dec, // increment the counter
     output dwf, // overflow
     output value[4] // current value
+    
   ) 
 
 {

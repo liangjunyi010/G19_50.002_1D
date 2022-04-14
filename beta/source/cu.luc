@@ -9,10 +9,12 @@ module cu (
     input central_button,
     input right_button,
     
+    input change_color,
+    
     output alufn[4],
     output asel[3],
     output bsel[3],
-    output wdsel[2],
+    output wdsel[3],
     output regfile_write_address[4], // rc
     output regfile_read_address_a[4], // ra
     output regfile_read_address_b[4], // rb
@@ -59,7 +61,10 @@ module cu (
       SWAP_HEAD,
       ENQUENE,
       INCREASE_SCORE,
-      GAME_OVER
+      GAME_OVER,
+      FLASH_RED,
+      FLASH_BLUE,
+      FLASH_GREEN
       };
     
   }
@@ -306,7 +311,7 @@ module cu (
         game_fsm.d = game_fsm.EXTRACT_COLOR;
           }
        else{
-        game_fsm.d = game_fsm.GAME_OVER;
+        game_fsm.d = game_fsm.FLASH_RED;
           }
        
   
@@ -608,7 +613,7 @@ module cu (
         fuck = b11100;
         
         if(rb_data==1){
-        game_fsm.d = game_fsm.GAME_OVER;
+        game_fsm.d = game_fsm.FLASH_RED;
           }
           else{
           game_fsm.d = game_fsm.DECREASE_TIMER;
@@ -636,7 +641,7 @@ module cu (
         alufn = b0000;                             
         asel = b000;                                  
         bsel = b000;
-        we = b0;
+        we = b1;
         wdsel = b01;
         regfile_read_address_a = b0000;
         regfile_read_address_b = b0000;
@@ -645,14 +650,79 @@ module cu (
         seven_seg2 = b00;
         
         
-        fuck = b11110;
-        
+
         if(rst == 0){
         game_fsm.d = game_fsm.GAME_OVER;
         }
         else{
         game_fsm.d = game_fsm.START;
-        }         
+        }
+          
+      game_fsm.FLASH_RED: 
+        alufn = b0000;                             
+        asel = b000;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b100;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000;
+        regfile_write_address = b0010;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+       
+       if(change_color){ 
+        game_fsm.d = game_fsm.FLASH_GREEN; 
+          }
+          else{
+          game_fsm.d = game_fsm.FLASH_RED;
+            } 
+          
+          
+          
+      game_fsm.FLASH_GREEN: 
+        alufn = b0000;                             
+        asel = b000;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b101;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000;
+        regfile_write_address = b0010;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        
+
+        
+        if(change_color){ 
+        game_fsm.d = game_fsm.FLASH_BLUE; 
+          }
+          else{
+          game_fsm.d = game_fsm.FLASH_GREEN;
+            } 
+          
+          
+          
+      game_fsm.FLASH_BLUE: 
+        alufn = b0000;                             
+        asel = b000;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b110;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0000;
+        regfile_write_address = b0010;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        
+
+        
+        if(change_color){ 
+        game_fsm.d = game_fsm.GAME_OVER; 
+          }
+          else{
+          game_fsm.d = game_fsm.FLASH_BLUE;
+            } 
+                   
       }
     }
     } 

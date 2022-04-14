@@ -39,6 +39,8 @@ module beta (
   random_gen_q random_gen_q1(.clk(clk),.rst(rst));
   random_gen_row random_gen_row1(.clk(clk),.rst(rst));
   
+  counter change_color(#SIZE(1),#DIV(26),.clk(clk), .rst(rst));
+  edge_detector change_color_detector(#RISE(1), #FALL(0), .clk(clk));
   
   
   
@@ -59,10 +61,12 @@ module beta (
     
     //edge detectors
     game_timer_detector.in = slow_timer.value; // 30 second timer detector
+    change_color_detector.in = change_color.value;
 
     
     //pass timer and counter signals to CU unit
-    cu1.st = game_timer_detector.out; 
+    cu1.st = game_timer_detector.out;
+    cu1.change_color = change_color_detector.out; 
 
 
     
@@ -138,13 +142,17 @@ module beta (
     
     //wdsel mux
     case (cu1.wdsel){
-      b00 : regfile1.data = alu1.out;
-      b01 : regfile1.data = b1100110011001100;
-      b11 : random_gen_q1.trigger=1;
+      b000 : regfile1.data = alu1.out;
+      b001 : regfile1.data = 16b0;
+      b011 : random_gen_q1.trigger=1;
             regfile1.data = random_gen_q1.out;
-      b10 : random_gen_row1.trigger=1;
+      b010 : random_gen_row1.trigger=1;
             regfile1.data = random_gen_row1.out;
-      default : //b00
+      b100 : regfile1.data = b1111111111111111; // red
+      b101 : regfile1.data = b1010101010101010; // green
+      b110 : regfile1.data = b0101010101010101; // blue
+      
+        default : //b00
           regfile1.data = alu1.out;
     }
     
