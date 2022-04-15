@@ -59,6 +59,7 @@ module beta (
     random_gen_row1.trigger = 0;
     
     
+    
     //edge detectors
     game_timer_detector.in = slow_timer.value; // 30 second timer detector
     change_color_detector.in = change_color.value;
@@ -161,6 +162,9 @@ module beta (
     time_out = regfile1.timer_out;
     score_out = regfile1.score_out[7:0];
     leds = regfile1.q_out[15:0];
+    
+    random_gen_q1.q = regfile1.rand_q_out[15:0];
+    
     r_out = regfile1.r_out;
   }
 }

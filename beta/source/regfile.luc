@@ -16,16 +16,19 @@ module regfile (
     output timer_out[4],
     output score_out[16],
     output q_out[16],
-    output r_out[16]
+    output r_out[16],
+    output rand_q_out[16]
 
   ) 
 
 {
   .clk(clk){
+  dff q[16];
+  dff randq[16];
     .rst(rst){
       dff timer[16];
       dff score[16];
-      dff q[16];
+      
       dff rpeek[16];
       dff bpos[16];
       dff apos[16];
@@ -37,7 +40,7 @@ module regfile (
       dff temp_1[16];
       dff temp_2[16];
       dff randr[16];
-      dff randq[16];
+      
       dff bstrap[16];
     }
   }
@@ -116,6 +119,8 @@ module regfile (
     timer_out = timer.q[3:0];
     q_out = q.q;
     r_out = randr.q;
+    
+    rand_q_out = randq.q;
    
 
   }

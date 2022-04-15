@@ -64,7 +64,9 @@ module cu (
       GAME_OVER,
       FLASH_RED,
       FLASH_BLUE,
-      FLASH_GREEN
+      FLASH_GREEN,
+      STORE_QUEUE,
+      STORE_QUEUE_TWO
       };
     
   }
@@ -125,7 +127,7 @@ module cu (
         asel = b000;                                  
         bsel = b000;
         we = b1;
-        wdsel = b11;
+        wdsel = b011;
         regfile_read_address_a = b0000;
         regfile_read_address_b = b0000; 
         regfile_write_address = b1110;
@@ -311,7 +313,7 @@ module cu (
         game_fsm.d = game_fsm.EXTRACT_COLOR;
           }
        else{
-        game_fsm.d = game_fsm.FLASH_RED;
+        game_fsm.d = game_fsm.STORE_QUEUE;
           }
        
   
@@ -365,7 +367,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b01111;
+        
         
         if(rb_data==1){
         game_fsm.d = game_fsm.REDUCE_RED;
@@ -558,6 +560,20 @@ module cu (
         seven_seg2 = b00;
         
         fuck = b11001;
+        game_fsm.d = game_fsm.STORE_QUEUE_TWO;
+          
+          
+       game_fsm.STORE_QUEUE_TWO: 
+        alufn = b0000;                             
+        asel = b010;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b000;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0010;
+        regfile_write_address = b1110;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
         game_fsm.d = game_fsm.INCREASE_SCORE;
         
         
@@ -613,7 +629,7 @@ module cu (
         fuck = b11100;
         
         if(rb_data==1){
-        game_fsm.d = game_fsm.FLASH_RED;
+        game_fsm.d = game_fsm.STORE_QUEUE;
           }
           else{
           game_fsm.d = game_fsm.DECREASE_TIMER;
@@ -657,6 +673,20 @@ module cu (
         else{
         game_fsm.d = game_fsm.START;
         }
+          
+      game_fsm.STORE_QUEUE: 
+        alufn = b0000;                             
+        asel = b010;                                  
+        bsel = b000;
+        we = b1;
+        wdsel = b000;
+        regfile_read_address_a = b0000;
+        regfile_read_address_b = b0010;
+        regfile_write_address = b1110;
+        seven_seg1 = b00;
+        seven_seg2 = b00;
+        game_fsm.d = game_fsm.FLASH_RED;
+              
           
       game_fsm.FLASH_RED: 
         alufn = b0000;                             
