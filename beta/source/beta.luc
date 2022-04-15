@@ -3,15 +3,12 @@ module beta (
     input central_button,
     input right_button,
 
-
-    
     input clk,  // clock
     input rst,  // reset
 
     output time_out[4],
     output score_out[8],
     output leds[16],
-    output fuck[5],
     output r_out[16],
     
 
@@ -54,7 +51,6 @@ module beta (
   always {
 
 
-  fuck = cu1.fuck;
     random_gen_q1.trigger = 0;
     random_gen_row1.trigger = 0;
     

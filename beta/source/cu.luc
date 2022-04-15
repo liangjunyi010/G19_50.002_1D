@@ -20,8 +20,8 @@ module cu (
     output regfile_read_address_b[4], // rb
     output we, //we
     output seven_seg1[2],
-    output seven_seg2[2],
-    output fuck[5]
+    output seven_seg2[2]
+    
     
  
     
@@ -85,13 +85,13 @@ module cu (
     seven_seg1 = 0;
     seven_seg2 = 0;
     
-    fuck = b11111;
+
     
     
 
     
     
-        if (rst){
+    if (rst){
         game_fsm.d = game_fsm.START_SET_TIMER;
         seven_seg1 = b01;
         seven_seg2 = b01;
@@ -113,8 +113,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b00010;
-        
+       
         if(rb_data!=b00001111){
           game_fsm.d = game_fsm.START_SET_TIMER;
           }
@@ -133,9 +132,6 @@ module cu (
         regfile_write_address = b1110;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b00011;
-        
         game_fsm.d = game_fsm.SET_QUEUE;
       
         
@@ -149,10 +145,7 @@ module cu (
         regfile_read_address_b = b1110; 
         regfile_write_address = b0010;
         seven_seg1 = b00;
-        seven_seg2 = b00;
-        
-        fuck = b00100;
-        
+        seven_seg2 = b00;       
         game_fsm.d = game_fsm.IDLE;
         
       game_fsm.IDLE:
@@ -166,10 +159,6 @@ module cu (
         regfile_write_address = b0000;
         seven_seg1 = b00;
         seven_seg2 = b00;
-
-        fuck = b00101;
-        
-        
         if(st){
         game_fsm.d = game_fsm.CHECK_TIMER;
           }
@@ -199,10 +188,7 @@ module cu (
         regfile_read_address_b = b0000; 
         regfile_write_address = b0100;
         seven_seg1 = b00;
-        seven_seg2 = b00;
-        
-        fuck = b00110;
-        
+        seven_seg2 = b00;  
         game_fsm.d = game_fsm.DEQUEUE;
         
         
@@ -218,8 +204,6 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b00111;
-        
         game_fsm.d = game_fsm.DEQUEUE;
         
         
@@ -234,8 +218,6 @@ module cu (
         regfile_write_address = b0100;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b01000;
         
         game_fsm.d = game_fsm.DEQUEUE;
         
@@ -253,7 +235,6 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b01001;
         
         game_fsm.d = game_fsm.EXTRACT_POS;
         
@@ -270,10 +251,7 @@ module cu (
         regfile_write_address = b0101;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b01010;
-        
-        
+
         
         game_fsm.d = game_fsm.CHECK_POS;
         
@@ -290,7 +268,6 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b01011;
         
         game_fsm.d = game_fsm.BRANCE_POS;
        
@@ -306,8 +283,6 @@ module cu (
         regfile_write_address = b1111;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b01100;
         
        if(rb_data==1){
         game_fsm.d = game_fsm.EXTRACT_COLOR;
@@ -329,10 +304,7 @@ module cu (
         regfile_write_address = b0110;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b01101;
-        
-        
+   
         game_fsm.d = game_fsm.CHECK_COLOR_RED;     
 
       
@@ -350,8 +322,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b01110;
-        
+
         game_fsm.d = game_fsm.BRANCH_COLOR_RED;
         
         
@@ -366,9 +337,7 @@ module cu (
         regfile_write_address = b1111;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        
-        
+               
         if(rb_data==1){
         game_fsm.d = game_fsm.REDUCE_RED;
           }
@@ -387,8 +356,7 @@ module cu (
         regfile_write_address = b1000;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b10000;
+       
         
         game_fsm.d = game_fsm.BRANCH_COLOR_GREEN;
 
@@ -403,8 +371,7 @@ module cu (
         regfile_write_address = b1111;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b10001;
+       
              
         if(rb_data==1){
         game_fsm.d = game_fsm.REDUCE_GREEN;
@@ -425,8 +392,7 @@ module cu (
         regfile_write_address = b1000;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b10010;
+
         game_fsm.d = game_fsm.BRANCH_COLOR_BLUE;
 
         
@@ -441,8 +407,6 @@ module cu (
         regfile_write_address = b1111;
         seven_seg1 = b00;
         seven_seg2 = b00;     
-        
-        fuck = b10011;
         
         game_fsm.d = game_fsm.RAND_GEN_ROW;
 
@@ -459,8 +423,6 @@ module cu (
         regfile_write_address = b0110;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b10100;
 
         game_fsm.d = game_fsm.ROW_GEN_MANUAL;
 
@@ -477,7 +439,6 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b10101;
         
         game_fsm.d = game_fsm.ROW_GEN_MANUAL;
         
@@ -494,8 +455,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b10101;
-        
+      
         game_fsm.d = game_fsm.SWAP_HEAD;
         
       game_fsm.SWAP_HEAD:
@@ -508,25 +468,20 @@ module cu (
         regfile_read_address_b = b1001; 
         regfile_write_address = b0010;
         seven_seg1 = b00;
-        seven_seg2 = b00;
-        
-        fuck = b10110;
-        
+        seven_seg2 = b00;     
         game_fsm.d = game_fsm.INCREASE_SCORE;
         
-      game_fsm.RAND_GEN_ROW: // gai
+      game_fsm.RAND_GEN_ROW: 
         alufn = b0000;                             
         asel = b000;                                  
         bsel = b000;
         we = b1;
-        wdsel = b10;
+        wdsel = b010;
         regfile_read_address_a = b0000;
         regfile_read_address_b = b0000; 
         regfile_write_address = b1101;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b10111;
  
         game_fsm.d = game_fsm.ROW_GEN_RAND;
    
@@ -541,8 +496,6 @@ module cu (
         regfile_write_address = b1001;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        fuck = b11000;
         
         game_fsm.d = game_fsm.ENQUENE;
         
@@ -559,7 +512,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b11001;
+ 
         game_fsm.d = game_fsm.STORE_QUEUE_TWO;
           
           
@@ -589,9 +542,7 @@ module cu (
         regfile_write_address = b0001;
         seven_seg1 = b10;
         seven_seg2 = b00;
-        
-        fuck = b11010;
-        
+
   
         game_fsm.d = game_fsm.IDLE;
    
@@ -608,7 +559,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b11011;
+
         game_fsm.d = game_fsm.BRANCE_TIMER;
         
  
@@ -626,8 +577,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b00;
         
-        fuck = b11100;
-        
+  
         if(rb_data==1){
         game_fsm.d = game_fsm.STORE_QUEUE;
           }
@@ -648,8 +598,7 @@ module cu (
         seven_seg1 = b00;
         seven_seg2 = b10;
         
-        fuck = b11101;
-        
+
         game_fsm.d = game_fsm.IDLE;
         
         
@@ -664,8 +613,7 @@ module cu (
         regfile_write_address = b0010;
         seven_seg1 = b00;
         seven_seg2 = b00;
-        
-        
+
 
         if(rst == 0){
         game_fsm.d = game_fsm.GAME_OVER;
@@ -705,7 +653,7 @@ module cu (
           }
           else{
           game_fsm.d = game_fsm.FLASH_RED;
-            } 
+         } 
           
           
           
@@ -722,13 +670,12 @@ module cu (
         seven_seg2 = b00;
         
 
-        
         if(change_color){ 
         game_fsm.d = game_fsm.FLASH_BLUE; 
           }
           else{
           game_fsm.d = game_fsm.FLASH_GREEN;
-            } 
+         } 
           
           
           
