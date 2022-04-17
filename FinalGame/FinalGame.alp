@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FinalGame" board="Alchitry Au" language="Lucid" version="3">
+  <files>
+    <src>compare.luc</src>
+    <src>random_gen_row.luc</src>
+    <src>seven_seg.luc</src>
+    <src>shifter.luc</src>
+    <component>reset_conditioner.luc</component>
+    <src>alu.luc</src>
+    <src>cu.luc</src>
+    <src>enq.luc</src>
+    <src>choose_position.luc</src>
+    <src>mul.luc</src>
+    <src>multi_decre.luc</src>
+    <component>pn_gen.luc</component>
+    <src>choose_color.luc</src>
+    <src>decimal_counter_incre.luc</src>
+    <component>counter.luc</component>
+    <component>pipeline.luc</component>
+    <src>multi_seven_seg.luc</src>
+    <component>button_conditioner.luc</component>
+    <src top="true">au_top.luc</src>
+    <src>multi_incre.luc</src>
+    <src>boolean.luc</src>
+    <src>adder.luc</src>
+    <src>random_gen_q.luc</src>
+    <src>shd.luc</src>
+    <component>decoder.luc</component>
+    <src>beta.luc</src>
+    <src>decimal_counter_decre.luc</src>
+    <src>regfile.luc</src>
+    <src>merge_two.luc</src>
+    <component>edge_detector.luc</component>
+    <constraint lib="true">au.xdc</constraint>
+    <constraint>io.acf</constraint>
+  </files>
+</project>

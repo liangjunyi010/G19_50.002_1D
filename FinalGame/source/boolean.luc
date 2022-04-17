@@ -1,0 +1,27 @@
+// Note: a & b are 16-bit inputs. ALUFN is a 4-bit input
+// out is a 16-bit output
+module boolean (
+    input a[16],     
+    input b[16],
+    input alufn_signal[4],
+    output out[16]
+  ) {
+
+  
+  always {
+
+    case(alufn_signal[3:0]){
+    
+      b0110: out = a & b;  // alufn_signal b0110 denotes operation AND
+      b0111: out = a | b;  // alufn_signal b0111 denotes operation OR
+      b1000: out = a ^ b;  // alufn_signal b1000 denotes operation XOR
+      b1001: out = a;    // alufn_signal b1001 denotes operation A
+      b1110: out = b;  // alufn_signal b1110 denotes operation B
+      
+      default:
+        out = b0000000000000000;
+    }
+   
+  }
+}
+

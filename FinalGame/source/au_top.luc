@@ -1,0 +1,103 @@
+module au_top (
+    input clk,              // 100MHz clock
+    input rst_n,            // reset button (active low)
+
+    input usb_rx,           // USB->Serial input
+    output usb_tx,          // USB->Serial output
+
+    output io_seg_1 [7],      // 7-segment LEDs on IO Shield
+    output io_sel_1 [4],      // Digit select on IO Shield
+    
+    output io_seg_2 [7],      // 7-segment LEDs on IO Shield
+    output io_sel_2 [4],      // Digit select on IO Shield
+    
+    input io_button [5],    // 5 buttons on IO Shield
+    
+    output io_led_r [12],
+    output io_led_g [12],
+    output io_led_b [12]
+    
+
+  ) {
+  
+  sig rst;                  // reset signal
+
+  
+  merge_two merge_two1;
+  .clk(clk) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+    reset_conditioner reset_cond;
+      beta beta1(.rst(rst));
+      
+  
+  
+  button_conditioner buttoncond1;
+  button_conditioner buttoncond2;
+  button_conditioner buttoncond3;
+  
+
+  edge_detector button_detector1(#RISE(1), #FALL(0));
+  edge_detector button_detector2(#RISE(1), #FALL(0));
+  edge_detector button_detector3(#RISE(1), #FALL(0));
+    
+  multi_decre dec_ctr;
+  multi_incre dec_inc;
+  multi_seven_seg seg1(.rst(rst));
+  multi_seven_seg seg2(.rst(rst));
+    
+  
+  }
+  
+  always {
+    reset_cond.in = ~rst_n; // input raw inverted reset signal
+    rst = reset_cond.out;   // conditioned reset
+    io_seg_1 = 0;
+    io_sel_1 = 0;
+    usb_tx = usb_rx;        // loop serial port
+    
+    
+    
+    
+    
+
+    
+    buttoncond1.in = io_button[3];
+    button_detector1.in = buttoncond1.out;
+    beta1.left_button = button_detector1.out;
+    
+    
+    buttoncond2.in = io_button[1];
+    button_detector2.in = buttoncond2.out;
+    beta1.central_button = button_detector2.out;
+    
+    buttoncond3.in = io_button[4];
+    button_detector3.in = buttoncond3.out;
+    beta1.right_button = button_detector3.out;
+    
+    
+
+    dec_inc.inc = beta1.seven_seg1_score_inc;
+    dec_inc.rst = beta1.seven_seg1_score_rst;
+    seg1.values = dec_inc.digits;
+    io_seg_1 = ~seg1.seg;
+    io_sel_1 = seg1.sel;
+
+    
+    
+    dec_ctr.dec = beta1.seven_seg2_timer_dec;
+    dec_ctr.rst = beta1.seven_seg2_timer_rst;
+    seg2.values = dec_ctr.digits;
+    io_seg_2 = ~seg2.seg;
+    io_sel_2 = seg2.sel;
+    
+
+    
+    merge_two1.que = beta1.leds;
+    io_led_r = ~merge_two1.out_r;
+    io_led_g = ~merge_two1.out_g;
+    io_led_b = ~merge_two1.out_b;
+    
+
+  }
+}

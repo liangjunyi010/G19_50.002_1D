@@ -1,0 +1,45 @@
+//Input: a & b are 16-bit inputs. ALUFN is a 4-bit input
+//Output: z, v, n are all 1-bit outputs.
+module adder (
+// Note: a & b are 16-bit inputs. ALUFN is a 4-bit input
+// z, v, n are all 1-bit outputs.
+    input a[16],       
+    input b[16],       
+    input alufn_signal[4],  
+    output out[16],   // 16 bits output
+    output z[1],      // which is 1 when out are all zeros
+    output v[1],      // which is 1 when the addition operation overflows
+    output n[1]      // which is 1 when out is negative
+  ) {
+  // The signal out is write only and cannot be read.
+  // Hence, a signal s is used as a temp variable for the output.
+  sig s[16]; 
+  sig v0;
+
+  always {
+  
+    s = b0000000000000000; 
+    v0 = 0;
+    
+    case(alufn_signal){ 
+      b0000:s = a+b;   // alufn_signal b0000 denotes ADD operation
+            v0 = (a[15] & (b[15] ^ alufn_signal[0]) & !s[15]) | (!a[15] & !(b[15] ^ alufn_signal[0]) & s[15]); 
+      b0001:s = a-b;   // alufn_signal b0001 denotes SUB operation
+            v0 = (a[15] & (b[15] ^ alufn_signal[0]) & !s[15]) | (!a[15] & !(b[15] ^ alufn_signal[0]) & s[15]); 
+
+      b0011:s = a-b;  // alufn_signal b0011 denotes CMPEQ operation
+            v0 = (a[15] & (b[15] ^ 1) & !s[15]) | (!a[15] & !(b[15] ^ 1) & s[15]); 
+      b0100:s = a-b;  // alufn_signal b0100 denotes CMPLT operation
+            v0 = (a[15] & (b[15] ^ 1) & !s[15]) | (!a[15] & !(b[15] ^ 1) & s[15]); 
+      b0101:s = a-b;  // alufn_signal b0101 denotes CMPLE operation
+            v0 = (a[15] & (b[15] ^ 1) & !s[15]) | (!a[15] & !(b[15] ^ 1) & s[15]); 
+      
+      
+      default: s = b0000000000000000;
+  }
+    n = s[15];  
+    v = v0;
+    z = ~|s;
+    out = s;
+  }
+}

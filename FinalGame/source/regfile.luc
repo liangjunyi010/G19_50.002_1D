@@ -1,0 +1,127 @@
+//the regfile for all game information
+module regfile (
+    input clk,  // clock
+    input rst,  // reset
+    input write_address[4], // write address
+    input we, // write enable
+    input data[16], // data in
+    
+    
+    input read_address_a[4], //address port a 
+    input read_address_b[4], //address port b
+    output out_a[16], //read port a
+    output out_b[16], //read port b
+    
+    //debug
+    output timer_out[4],
+    output score_out[16],
+    output q_out[16],
+    output r_out[16],
+    output rand_q_out[16]
+
+  ) 
+
+{
+  .clk(clk){
+  dff q[16];
+  dff randq[16];
+    .rst(rst){
+      dff timer[16];
+      dff score[16];
+      
+      dff rpeek[16];
+      dff bpos[16];
+      dff apos[16];
+      dff acol[16];
+      dff cmpbtn[16];
+      dff cmpclr[16];
+      dff rnew[16];
+      dff cmptime[16];
+      dff temp_1[16];
+      dff temp_2[16];
+      dff randr[16];
+      
+      dff bstrap[16];
+    }
+  }
+
+  always {
+  
+    //write port
+    if (we){
+      case(write_address){
+        b0000 : timer.d = data;
+        b0001 : score.d = data;
+        b0010 : q.d = data;
+        b0011 : rpeek.d = data;
+        b0100 : bpos.d = data;
+        b0101 : apos.d = data;
+        b0110 : acol.d = data;
+        b0111 : cmpbtn.d = data;
+        b1000 : cmpclr.d = data;
+        b1001 : rnew.d = data;
+        b1010 : cmptime.d = data;
+        b1011 : temp_1.d = data;
+        b1100 : temp_2.d = data;
+        b1101 : randr.d = data;
+        b1110 : randq.d = data;
+        b1111 : bstrap.d = data;
+      }
+    }
+    
+      
+    //read port a
+    case(read_address_a){
+        b0000 : out_a = timer.q;
+        b0001 : out_a = score.q;
+        b0010 : out_a = q.q;
+        b0011 : out_a = rpeek.q;
+        b0100 : out_a = bpos.q;
+        b0101 : out_a = apos.q;
+        b0110 : out_a = acol.q;
+        b0111 : out_a = cmpbtn.q;
+        b1000 : out_a = cmpclr.q;
+        b1001 : out_a = rnew.q;
+        b1010 : out_a = cmptime.q;
+        b1011 : out_a = temp_1.q;
+        b1100 : out_a = temp_2.q;
+        b1101 : out_a = randr.q;
+        b1110 : out_a = randq.q;
+        b1111 : out_a = bstrap.q;
+        default : out_a = 0;
+    }
+    
+    //read port b
+    case(read_address_b){
+        b0000 : out_b = timer.q;
+        b0001 : out_b = score.q;
+        b0010 : out_b = q.q;
+        b0011 : out_b = rpeek.q;
+        b0100 : out_b = bpos.q;
+        b0101 : out_b = apos.q;
+        b0110 : out_b = acol.q;
+        b0111 : out_b = cmpbtn.q;
+        b1000 : out_b = cmpclr.q;
+        b1001 : out_b = rnew.q;
+        b1010 : out_b = cmptime.q;
+        b1011 : out_b = temp_1.q;
+        b1100 : out_b = temp_2.q;
+        b1101 : out_b = randr.q;
+        b1110 : out_b = randq.q;
+        b1111 : out_b = bstrap.q;
+        default : out_b = 0;
+    }
+      
+    
+    
+    //For debugging
+    score_out = score.q;
+    timer_out = timer.q[3:0];
+    q_out = q.q;
+    r_out = randr.q;
+    
+    rand_q_out = randq.q;
+   
+
+  }
+}

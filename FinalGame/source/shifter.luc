@@ -1,0 +1,18 @@
+// Note: a is a 16-bit input, b is a 4-bit output. ALUFN is a 4-bit input
+// out is a 16-bit output
+module shifter (
+    input a[16],
+    input b[4],
+    input alufn_signal[4],
+    output out[16]
+  ) {
+
+  always {
+  case (alufn_signal){
+    default: out = a;
+    b1010: out = a << b;  // alufn_signal b1010 denotes operation SHL
+    b1011: out = a >> b;  // alufn_signal b1011 denotes operation SHR
+    b1100: out = $signed(a) >>> b;  // alufn_signal b1100 denotes operation SRA
+    }
+  }
+}
